@@ -1,0 +1,35 @@
+<!-- chat/templates/chat/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Chat Rooms</title>
+</head>
+<body>
+    <!-- kimi no nawa(your name)?<br> -->
+    <!-- <input id="p-name-input" type="text" size="100"><br> -->
+    <!-- <br> -->
+    <input type="button" value="Create Game" onclick="create()"><br>
+    <p>OR</p>
+    Join game by entering game-code<br>
+    <input id="game-name-input" type="text" size="100"><br>
+    <input id="game-name-submit" type="button" value="Enter">
+
+    <script>
+
+        function create()
+        {
+            window.location = '/createRoom';
+        }
+
+        document.querySelector('#game-name-input').focus();
+        document.querySelector('#game-name-submit').onclick = function(e) {
+            var gameName = document.querySelector('#game-name-input').value;
+            if(gameName != ''){
+            window.location = '/joinRoom/' + gameName  ;}
+        };
+
+    </script>
+
+</body>
+</html>

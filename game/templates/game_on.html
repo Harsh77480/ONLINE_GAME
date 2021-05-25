@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: rgb(37, 37, 37);">
+    
+    <div id="container" class="container">
+        <canvas id="drawing-area" class="drawing-area" height="500" width="500"></canvas>
+        <button id="clear-button" class="clear-button" type="button">Clear</button>
+      </div>
+    <!-- thecanvas -->
+    <!-- <div id="top" style="height :50vh; width:100vw" > -->
+        <!-- <canvas id = "canvas" style="border: 2px solid black; height : 90%;width:90% " ></canvas> -->
+        <!-- <canvas id = "canvas" style="border: 2px solid black;  " ></canvas> -->
+    <!-- </div> -->
+
+    <h2 id="message" style="color: aliceblue;"></h2>
+
+    <div id="bottom" style="height :50vh; width:100vw;">   
+        <div id = "yo" style="background-color: rgb(24, 33, 87); width: 90%; height: 100px; overflow:auto"  ></div>
+
+        <input id="p-message-input" type="text" size="20" placeholder="type here.."> 
+        <input id="p-message-submit" type="button" value="Send">
+        
+        <h3>
+            <div id = "timer" style="color:rgb(255, 62, 62);"></div>
+        </h3>
+    </div>
+
+
+    {{ room_name|json_script:"room-name" }}
+    {{ p_name|json_script:"p-name" }}
+
+    <script>
+        //for canvas
+        var timeout;
+        var k = "";
+
+        var downloadTimer ;
+        var message = document.getElementById('message');
+        const roomName = JSON.parse(document.getElementById('room-name').textContent);
+        const pName = JSON.parse(document.getElementById('p-name').textContent);
+
+        // this will create the websocket by sending url to routing.py 
+        const gameSocket = new WebSocket(
+            'ws://'
+            + window.location.host
+            + '/ws/game_On/'
+            + roomName
+            + '/'
+            + pName + '/'
+            
+        );
+
+        // player will disconnect form websocket
+        gameSocket.onclose = function(e) {
+            console.error('Chat socket closed unexpectedly');
+            window.location = '/error'
+        };
+
+        //RECEIVING (when message comes from websocket)
+            gameSocket.onmessage = function(e) {//when message comes i.e "when send is called from consumers.py"
+            var data = JSON.parse(e.data);
+
+                    if(data.settimer == "endGame"){
+                        window.location = '/endGame/' + pName
+                    }
+
+                    var para = document. createElement("p");
+
+                    if(data.settimer === "True" )//true means we are starting the new round so reset the timer and also display the 
+                        {                        //message as green because message is right answer as new round is starting after that message
+                            para.style.color = "lightgreen";
+                            
+                            clearInterval(downloadTimer);
+                            timer(data.word);
+                        }
+                        else{
+                        para.style.color = "red";
+                    }
+                    
+                    if(pName == data.player){//backend sends the player name who has to draw and if current player is him
+                                            //then as then to draw the random word sent by backend
+                        message.textContent = "Draw " + data.word;}
+                    else{
+                        message.textContent = "Guess opponent's Drawing!"; 
+                    }
+
+                    //add new paragarh( = message from websocket ) in div 
+                    if(data.message != ""){
+                        var node = document. createTextNode(" => " + data.message);
+                        para.appendChild(node)
+                        document.getElementById("yo").appendChild(para);
+                        document.getElementById("yo").scrollTop = document.getElementById("yo").scrollHeight;}
+
+
+                    //canvas
+                    k = data.image
+                    var image = new Image();
+                    var canvas = document.querySelector("#drawing-area");
+                    var ctx = canvas.getContext("2d");
+
+                    canvas.height = 400
+                    canvas.width = 500
+                    //canvas.width * (image.height / image.width);
+
+                    image.onload = function(){
+                        ctx.drawImage(image,0,0);
+
+                    }
+                        image.src = data.image;
+        }
+
+
+    //SENDING TO BACKEND:
+
+    //the canvas 
+    // frontend code which is copied and i dont know anything about
+    //except ondraw we are sending base64image pf canvas in text form to backend every time user pauses from drawing for 1sec
+
+                                window.addEventListener("load",()=>{
+                                            
+                                    const canvas = document.getElementById('drawing-area');
+                                    const canvasContext = canvas.getContext('2d');
+                                    const clearButton = document.getElementById('clear-button');
+                                    const state = {
+                                    mousedown: false
+                                    };
+                                    
+                                    // ===================
+                                    // == Configuration ==
+                                    // ===================
+                                    const lineWidth = 0.5;
+                                    const halfLineWidth = lineWidth / 2;
+                                    const fillStyle = 'white';
+                                    const strokeStyle = 'white';
+                                    const shadowColor = 'white';
+                                    const shadowBlur = lineWidth / 4;
+                                    
+                                    // =====================
+                                    // == Event Listeners ==
+                                    // =====================
+                                    canvas.addEventListener('mousedown', handleWritingStart);
+                                    canvas.addEventListener('mousemove', handleWritingInProgress);
+                                    canvas.addEventListener('mouseup', handleDrawingEnd);
+                                    canvas.addEventListener('mouseout', handleDrawingEnd);
+                                    
+                                    canvas.addEventListener('touchstart', handleWritingStart);
+                                    canvas.addEventListener('touchmove', handleWritingInProgress);
+                                    canvas.addEventListener('touchend', handleDrawingEnd);
+                                    
+                                    clearButton.addEventListener('click', handleClearButtonClick);
+                                    
+                                    // ====================
+                                    // == Event Handlers ==
+                                    // ====================
+                                    function handleWritingStart(event) {
+                                    event.preventDefault();
+                                    
+                                    const mousePos = getMosuePositionOnCanvas(event);
+                                    
+                                    canvasContext.beginPath();
+                                    
+                                    canvasContext.moveTo(mousePos.x, mousePos.y);
+                                    
+                                    canvasContext.lineWidth = lineWidth;
+                                    canvasContext.strokeStyle = strokeStyle;
+                                    canvasContext.shadowColor = null;
+                                    canvasContext.shadowBlur = null;
+                                    
+                                    canvasContext.fill();
+                                    
+                                    state.mousedown = true;
+
+
+
+
+                                    }
+                                    
+                                    function handleWritingInProgress(event) {
+                                    event.preventDefault();
+                                    
+                                    if (state.mousedown) {
+                                        const mousePos = getMosuePositionOnCanvas(event);
+                                    
+                                        canvasContext.lineTo(mousePos.x, mousePos.y);
+                                        canvasContext.stroke();
+                                    }
+
+                                    
+                                    
+
+                                    }
+                                    
+                                    function handleDrawingEnd(event) {
+                                    event.preventDefault();
+                                    
+                                    if (state.mousedown) {
+                                        canvasContext.shadowColor = shadowColor;
+                                        canvasContext.shadowBlur = shadowBlur;
+                                        canvasContext.strokeStyle = "white";
+                                        canvasContext.stroke();
+                                    }
+                                    
+                                    state.mousedown = false;
+
+                                    root = this 
+                                    //sending image only user pauses for a minute
+                                    if(root.timeout != undefined ) clearTimeout(root.timeout);
+                                    root.timeout = setTimeout(function(){
+                                        var base64ImageData = canvas.toDataURL("image/png" ,0.5);
+                                        k = base64ImageData;
+                                        gameSocket.send(JSON.stringify({
+                                            'image': base64ImageData,
+                                            'message' : "",
+                                            'timeup' : "False",
+                                        }));
+
+                                    },1000)
+
+                                    }
+                                    
+                                    function handleClearButtonClick(event) {
+                                    event.preventDefault();
+                                    
+                                    clearCanvas();
+                                    }
+                                    
+                                    // ======================
+                                    // == Helper Functions ==
+                                    // ======================
+                                    function getMosuePositionOnCanvas(event) {
+                                    const clientX = event.clientX || event.touches[0].clientX;
+                                    const clientY = event.clientY || event.touches[0].clientY;
+                                    const { offsetLeft, offsetTop } = event.target;
+                                    const canvasX = clientX - offsetLeft;
+                                    const canvasY = clientY - offsetTop;
+                                    
+
+
+                                    
+
+
+                                    return { x: canvasX, y: canvasY };
+                                    }
+                                    
+                                    function clearCanvas() {
+                                    canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+                                    }
+
+                                                
+                                                
+
+
+                                            }
+
+
+                                    );
+
+
+    //user sending message to backend 
+    document.querySelector('#p-message-submit').onclick = function(e) {
+        const messageInputDom = document.querySelector('#p-message-input').value;
+        gameSocket.send(JSON.stringify({
+            'message' : messageInputDom,
+            'timeup' : "False",
+            'image' : k
+        }));
+
+        messageInputDom.value = '';
+    };
+    
+
+    //the timer with simple setinterval sends correct ans to websocket when timesup but with timeup = True
+    function timer(x){
+        var timeleft = 60;
+        downloadTimer = setInterval(function(){
+        timeleft--;
+        document.getElementById("timer").textContent = timeleft;
+        if(timeleft <= 0)
+            {clearInterval(downloadTimer);
+
+                gameSocket.send(JSON.stringify({
+                    'message' : x,
+                    'timeup' : "True",
+                    'image' : k
+                }))
+            
+            }
+        },1000);
+
+    }
+
+    </script>
+<style>
+
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      
+      .drawing-area {
+        box-shadow: 0 0 6px 0 #999;
+      }
+      
+      .clear-button {
+        margin: 2em;
+        font-size: 16px;
+      }
+      
+      
+</style>
+
+</body>
+</html>
+
