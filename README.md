@@ -6,8 +6,10 @@ A Realtime White-Board Game made using WEBSOCKTS<br>
  <br>
   Redis, Django channels, Javascript, HTML, CSS<br>
   
- # Demo
-<!--  <h3> Pairing up the Players </h3>  -->
+ # DEMO 
+ 
+ # Pairing up the Players
+<!--  <h3>  </h3>  -->
 ![alt text](/Join.gif "Logo Title Text 1")
 
 
