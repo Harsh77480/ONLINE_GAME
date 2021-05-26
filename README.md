@@ -13,7 +13,7 @@ A Realtime White-Board Game made using WEBSOCKTS<br>
 ![alt text](/Join.gif "Logo Title Text 1")
 
 
- <h3> Automatically Switch Turns When TimesUp </h3> 
+ #Automatically change Turns if Timesup
 ![alt text](/Turn.gif "Logo Title Text 1")
 
 
