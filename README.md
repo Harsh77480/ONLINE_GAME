@@ -13,11 +13,13 @@ A Realtime White-Board Game made using WEBSOCKTS<br>
 ![alt text](/Join.gif "Logo Title Text 1")
 
 
- # Automatically change Turns if Timesup
+ # Automatically changing Turns if Timesup
  
 ![alt text](/Turn.gif "Logo Title Text 1")
 
 
+ # Restricting Players if Rooms if FULL
+ 
 
 
   
