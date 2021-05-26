@@ -4,7 +4,7 @@ A Realtime White-Board Game made using WEBSOCKTS<br>
   Redis, Django channels, Javascript, HTML, CSS<br>
   
 
-  ```
+  ```diff
 - text in red
 + text in green
 ! text in orange
