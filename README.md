@@ -3,7 +3,6 @@ A Realtime White-Board Game made using WEBSOCKTS<br>
 <h3 >
  Technologies used - 
  </h3>
- <br>
  <h3 >
   Redis, Django channels, Javascript, HTML, CSS
  </h3>
