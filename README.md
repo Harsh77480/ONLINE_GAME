@@ -24,6 +24,7 @@ A Realtime White-Board Game made using WEBSOCKTS<br>
 # ,
 
  # Automatically changing Turns if Time is up : 
+ We get a Random Word To Draw and Guess<br>
 Frontend Js is Responsible for Sending Websocket all the Messages <br>
 including Correct One if TimesUp ,<br>
 "Game_ON" Websocket Consumer Changes "Game" model acc. to Each Message.<br>
