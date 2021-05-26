@@ -6,7 +6,7 @@ A Realtime White-Board Game made using WEBSOCKTS<br>
  <br>
  <h3 >
   '''
- Redis, Django channels, Javascript, HTML, CSS
+ - Redis, Django channels, Javascript, HTML, CSS
  '''
  </h3>
   
