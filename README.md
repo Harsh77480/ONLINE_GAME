@@ -9,7 +9,7 @@ A Realtime White-Board Game made using WEBSOCKTS<br>
 + text in green
 ! text in orange
 # text in gray
-@@ text in purple (and bold)@@
+@@ text in purple 
 ```
 
   
