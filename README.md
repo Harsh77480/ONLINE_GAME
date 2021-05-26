@@ -6,6 +6,7 @@ A Realtime White-Board Game made using WEBSOCKTS<br>
  <h3 >
   Redis, Django channels, Javascript, HTML, CSS
  </h3>
+  (Docker for running locally)
   
  # HOW IT WORKS :
  
