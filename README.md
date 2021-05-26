@@ -30,7 +30,7 @@ Frontend Js is Responsible for Sending Websocket all the Messages
 including Correct One if TimesUp ,
 "Game_ON" Websocket Consumer Changes "Game" model acc. to Each Message.
 
-![alt text](/turns.gif "Logo Title Text 1")
+![alt text](Animations/turns.gif "Logo Title Text 1")
 
 # ,
 
