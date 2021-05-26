@@ -10,9 +10,11 @@ A Realtime White-Board Game made using WEBSOCKTS<br>
   
  # HOW IT WORKS 
  
- <h5>I have used Combination of http and Websocket request i.e.</h5>
- <h5> both sync and acsync python Code for this project </h5>
- <h5> For Rendering Drawing Canvas's  Base64Image is Used </h5>
+ 
+ 
+ <h4>-> I have used Combination of http and Websocket request i.e.</h4>
+ <h4> both sync and acsync python Code for this project </h4>
+ <h4>-> For Rendering Drawing Canvas's  Base64Image is Used </h4>
   
 # Pairing up the Players :
 form simple django view player creates a "GAME" Model and random six word code is generated
