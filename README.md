@@ -5,11 +5,12 @@ A Realtime White-Board Game made using WEBSOCKTS<br>
   
 
   ```diff
-- text in red
-+ text in green
-! text in orange
+- Redis
+@@ Django Channels @@
+! Javasript
++ html,css
 # text in gray
-@@ text in purple 
+ 
 ```
 
   
