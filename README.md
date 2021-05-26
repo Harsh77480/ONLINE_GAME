@@ -20,7 +20,7 @@ A Realtime White-Board Game made using WEBSOCKTS<br>
 form simple django view player creates a "GAME" Model and random six word code is generated
 which works as "GROUP" for different "CHANNELS" that are connected through redis.
 This Way To Two Players are Connected with Same Websocket through Redis!
-![alt text](/Join.gif "Logo Title Text 1")
+![alt text](Animations/Join-min.gif "Logo Title Text 1")
 
 # ,
 
@@ -37,7 +37,7 @@ including Correct One if TimesUp ,
 # Restricting Players if Rooms if Game is Started :
 No of Players is Limited To 2 ,
 Django "Game" Model Will Not allow another "Player" Model,
-![alt text](/Restrict.gif "Logo Title Text 1")
+![alt text](Animations/Restrict.gif "Logo Title Text 1")
  
 
 
