@@ -8,18 +8,18 @@ A Realtime White-Board Game made using WEBSOCKTS<br>
   
  # DEMO 
  
-Pairing up the Players :
+# Pairing up the Players :
 ![alt text](/Join.gif "Logo Title Text 1")
 
 # ,
 
 
- Automatically changing Turns if Timesup : 
+ # Automatically changing Turns if Timesup : 
 ![alt text](/turns.gif "Logo Title Text 1")
 
 # ,
 
-Restricting Players if Rooms if FULL :
+# Restricting Players if Rooms if FULL :
 ![alt text](/Restrict.gif "Logo Title Text 1")
  
  
